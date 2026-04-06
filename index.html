@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="TextLife - Simulador de vida estilo BitLife">
+    <title>TextLife | Simulador de Vida</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ═══════════ INTRO ═══════════ -->
+<div id="intro" class="app-container show">
+    <div class="intro-glow"></div>
+    <div class="intro-inner">
+        <div class="intro-logo"><span class="iw">Text</span><span class="ig">Life</span></div>
+        <p class="intro-sub">Tu vida. Tus decisiones.</p>
+        <button id="btn-start" class="btn-neon">🎲 Nueva Vida</button>
+        <p class="intro-hint">Se generará un personaje aleatorio</p>
+    </div>
+</div>
+
+<!-- ═══════════ GAME ═══════════ -->
+<div id="game" class="app-container">
+
+    <!-- HEADER -->
+    <header id="header" class="header">
+        <button class="h-menu">☰</button>
+        <span class="h-title">BitLife <span class="neon">LIVE!</span></span>
+        <button class="h-gold">Hazte CASERO</button>
+    </header>
+
+    <!-- SUB-HEADER -->
+    <div id="subheader" class="subheader">
+        <span class="sh-gift">🎁 OFERTA</span>
+        <span class="sh-bal" id="sh-bal">💰 $0</span>
+    </div>
+
+    <!-- PROFILE -->
+    <section id="profile" class="profile">
+        <div class="p-left">
+            <div class="p-avatar" id="p-avatar">👶</div>
+            <div class="p-info">
+                <span class="p-name" id="p-name">—</span>
+                <span class="p-occ" id="p-occ">Bebé</span>
+                <span class="p-loc" id="p-loc">🏳️ —</span>
+            </div>
+        </div>
+        <div class="p-right">
+            <span class="p-money" id="p-money">$0</span>
+            <span class="p-age" id="p-age">Edad: 0</span>
+        </div>
+    </section>
+
+    <!-- STAT BARS -->
+    <section id="statbars" class="statbars">
+        <div class="sb"><span class="sb-e">😊</span><span class="sb-n">Felicidad</span><div class="sb-track"><div class="sb-fill" id="bar-happiness"></div></div><span class="sb-v" id="val-happiness">80</span></div>
+        <div class="sb"><span class="sb-e">❤️</span><span class="sb-n">Salud</span><div class="sb-track"><div class="sb-fill" id="bar-health"></div></div><span class="sb-v" id="val-health">90</span></div>
+        <div class="sb"><span class="sb-e">🧠</span><span class="sb-n">Inteligencia</span><div class="sb-track"><div class="sb-fill" id="bar-intelligence"></div></div><span class="sb-v" id="val-intelligence">50</span></div>
+        <div class="sb"><span class="sb-e">✨</span><span class="sb-n">Aspecto</span><div class="sb-track"><div class="sb-fill" id="bar-appearance"></div></div><span class="sb-v" id="val-appearance">60</span></div>
+    </section>
+
+    <!-- FEED (flex-grow: 1, scrollable) -->
+    <section id="feed" class="feed">
+        <!-- event cards injected here -->
+    </section>
+
+    <!-- EDAD + BUTTON (anchored above footer) -->
+    <div id="age-zone" class="age-zone">
+        <button id="btn-age" class="btn-age">
+            <span class="ba-plus">EDAD</span>
+            <span class="ba-sym">+</span>
+        </button>
+    </div>
+
+    <!-- FOOTER NAV -->
+    <nav id="footer" class="footer">
+        <button class="fn" data-tab="school"><span class="fn-i">🏫</span><span class="fn-t">Colegio</span></button>
+        <button class="fn" data-tab="assets"><span class="fn-i">🏠</span><span class="fn-t">Bienes</span></button>
+        <button class="fn" data-tab="rels"><span class="fn-i">❤️</span><span class="fn-t">Relaciones</span></button>
+        <button class="fn" data-tab="acts"><span class="fn-i">⚡</span><span class="fn-t">Actividades</span></button>
+    </nav>
+
+    <!-- MODAL (decision events) -->
+    <div id="modal-bg" class="modal-bg hide">
+        <div class="modal-card" id="modal-card">
+            <div class="m-emoji" id="m-emoji">❓</div>
+            <h3 class="m-title" id="m-title">Evento</h3>
+            <p class="m-desc" id="m-desc"></p>
+            <div class="m-opts" id="m-opts"></div>
+        </div>
+    </div>
+
+    <!-- BOTTOM SHEET (menus) -->
+    <div class="bs-overlay hide" id="bs-overlay"></div>
+    <div class="bs" id="bs">
+        <div class="bs-grip"></div>
+        <div class="bs-head">
+            <button class="bs-back hide" id="bs-back">‹</button>
+            <span class="bs-title" id="bs-title">Menú</span>
+            <button class="bs-x" id="bs-x">✕</button>
+        </div>
+        <div class="bs-body" id="bs-body"></div>
+    </div>
+</div>
+
+<!-- ═══════════ DEATH ═══════════ -->
+<div id="death" class="app-container death-scr hide">
+    <div class="d-card">
+        <div class="d-skull">💀</div>
+        <h2 class="d-h">Has Fallecido</h2>
+        <p class="d-cause" id="d-cause"></p>
+        <div class="d-stats">
+            <div class="ds"><span class="ds-l">Edad</span><span class="ds-v" id="d-age">0</span></div>
+            <div class="ds"><span class="ds-l">Dinero</span><span class="ds-v" id="d-money">$0</span></div>
+            <div class="ds"><span class="ds-l">Profesión</span><span class="ds-v" id="d-job">—</span></div>
+        </div>
+        <button id="btn-relive" class="btn-neon">🔄 Vivir de Nuevo</button>
+    </div>
+</div>
+
+<script src="game-data.js"></script>
+<script src="game-engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
